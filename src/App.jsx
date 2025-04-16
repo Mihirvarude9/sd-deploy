@@ -27,13 +27,13 @@ function App() {
           }
         }
       );
-
+    
       setImage(`data:image/png;base64,${response.data.image}`);
-    } catch (err: any) {
+    } catch (err) {
       setError(err.response?.data?.detail || 'Something went wrong');
     } finally {
       setLoading(false);
-    }
+    }    
   };
 
   return (
