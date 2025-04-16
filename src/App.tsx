@@ -18,7 +18,7 @@ function App() {
         `${process.env.REACT_APP_API_URL}/api/generate`,
         {
           prompt: prompt,
-          num_steps: 60,
+          num_steps: 28,
           guidance_scale: 7.0
         },
         {
