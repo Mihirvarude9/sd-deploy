@@ -30,10 +30,15 @@ function App() {
     
       setImage(`data:image/png;base64,${response.data.image}`);
     } catch (err) {
-      setError(err.response?.data?.detail || 'Something went wrong');
+      if (axios.isAxiosError(err)) {
+        setError(err.response?.data?.detail || 'Something went wrong');
+      } else {
+        setError('Something went wrong');
+      }
     } finally {
       setLoading(false);
-    }    
+    }
+    
   };
 
   return (
