@@ -7,11 +7,15 @@ function App() {
   const [image, setImage] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [generationTime, setGenerationTime] = useState(null);
 
   const generateImage = async () => {
     setLoading(true);
     setError('');
     setImage('');
+    setGenerationTime(null);
+
+    const startTime = Date.now(); // Start time
 
     try {
       const response = await axios.post(
@@ -27,8 +31,12 @@ function App() {
           }
         }
       );
-    
+
+      const endTime = Date.now(); // End time
+      const totalTimeSeconds = ((endTime - startTime) / 1000).toFixed(2); // In seconds
+
       setImage(`data:image/png;base64,${response.data.image}`);
+      setGenerationTime(totalTimeSeconds);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         setError(err.response?.data?.detail || 'Something went wrong');
@@ -38,7 +46,6 @@ function App() {
     } finally {
       setLoading(false);
     }
-    
   };
 
   return (
@@ -60,6 +67,9 @@ function App() {
         <div>
           <h3>Generated Image</h3>
           <img src={image} alt="Generated" style={{ maxWidth: '100%' }} />
+          {generationTime && (
+            <p><strong>Time Taken:</strong> {generationTime} seconds</p>
+          )}
         </div>
       )}
     </div>
